@@ -86,9 +86,9 @@ if [[ "$mode" == --recover-from-tag ]]; then
     if ! git cat-file -e "$release_commit:CHANGELOG.md"; then
         git fetch --no-tags https://github.com/signalfx/splunk-otel-collector.git "refs/tags/$version"
     fi
-    release_notes="$(git show "$release_commit:CHANGELOG.md" | ./packaging/release/gh-release-notes.sh "$version" /dev/stdin)"
+    release_notes="$(git show "$release_commit:CHANGELOG.md" | ./packaging/release/gh-release-notes.sh "$version" "$staging_tag" /dev/stdin)"
 else
-    release_notes="$(./packaging/release/gh-release-notes.sh "$version")"
+    release_notes="$(./packaging/release/gh-release-notes.sh "$version" "$staging_tag")"
 fi
 test -x dist/github-release-tools/ghr
 export PATH="$PWD/dist/github-release-tools:$PATH"
